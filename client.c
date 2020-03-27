@@ -20,12 +20,13 @@
 
 #include "conf.h"
 
-int main() {
+int main(int argc, char **argv) {
 	struct sockaddr_in si_other;
 	int s, slen=sizeof(si_other);
 	char buf[BUFLEN];
 	char buf2[BUFLEN];
 	int overtime = 0;
+	int port = PORT;
 
 	double time_total = 0, time_max = 0, time_min = INFINITY;
 
@@ -35,9 +36,13 @@ int main() {
 		return -1;
 	}
 
+	if (argc > 1) {
+		port = atoi(argv[1]);
+	}
+
 	memset(&si_other, 0, sizeof(si_other));
 	si_other.sin_family = AF_INET;
-	si_other.sin_port = htons(PORT);
+	si_other.sin_port = htons(port);
 
 	if (inet_aton(SRV_IP, &si_other.sin_addr)==0) {
 		fprintf(stderr, "inet_aton() failed\n");
@@ -76,7 +81,7 @@ int main() {
 			time_min = time;
 		}
 
-		printf("%0.2lf\n", time);
+		//printf("%0.2lf\n", time);
 
 		if (time > 0.9) {
 			//printf("%d: big value = %0.2lf\n", i, time);

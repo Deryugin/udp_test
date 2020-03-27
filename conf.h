@@ -14,5 +14,6 @@
 #define PORT   9930
 
 #define SRV_IP "192.168.2.2"
+//#define SRV_IP "10.0.2.16"
 
 #endif /* CONF_H */
